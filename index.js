@@ -3,7 +3,7 @@
 // dependencies.
 var fs = require('fs'),
   spawn = require('child_process').spawn,
-  temp = require('temp'),
+  temp = require('temp').track(),
   async = require('async');
 
 // reference to a custom logger.
@@ -123,6 +123,11 @@ function createHandleAHPDFExit(tempPdfPath, callback) {
        * @returns {*}
        */
       function (err, fileData) {
+        // if an error occurred. log the file.
+        if (err) {
+          logError(err.message);
+          logError(err.stack);
+        }
         return callback(err, fileData);
       }
     );
