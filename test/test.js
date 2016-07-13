@@ -5,13 +5,13 @@
 var ahPdf = require('../index');
 var fs = require('fs');
 
-ahPdf.generatePdf('/home/uranakam/Desktop/test_fo.xml', function (err, fileData) {
+ahPdf.generatePdf('File Path', function (err, fileData) {
   if (err) {
     console.log(err);
     return;
   }
 
-  fs.writeFile('/home/uranakam/Desktop/test.pdf', fileData, function (err) {
+  fs.writeFile('File PAth', fileData, function (err) {
     if (err) {
       console.log(err);
     }
