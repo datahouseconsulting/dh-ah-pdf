@@ -16,9 +16,15 @@ This module uses the Antenna House AHFormatter tool.
   ahPdf.setLogger(logger);
   ```
 
-- The module contains a copy of the AHFormatter binary that it works will. To install it on ubuntu 14.04, you can cd to the bin directory and execute the shell script as a root user.
+- The module contains a copy of the AHFormatter binary that it works will. Option 1: To install using script:
 
         sudo sh configure.sh
+
+- Option 2: Install using the following commands.
+
+    apt-get install alien
+    gzip -N -d AHFormatterV63_64-6.3E-MR3.x86_64.rpm.gz
+    alien -i -d -c AHFormatterV63_64-6.3E-MR3.x86_64.rpm
 
 ## Create a PDF:
 
