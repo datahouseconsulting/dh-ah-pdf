@@ -1,6 +1,4 @@
-DH-AH-PDF
-====================================================================
-____________________________________________________________________
+# DH-AH-PDF
 
 This is a node module that allows you to create PDF files using xml or fo files.
 This module uses the Antenna House AHFormatter tool.
@@ -24,4 +22,6 @@ This module uses the Antenna House AHFormatter tool.
     ahPdf.generatePdf(xmlFilePath, function (err, pdfFileData) {
       // do processing.
     });
+
+
 
