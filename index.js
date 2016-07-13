@@ -6,19 +6,35 @@ var fs = require('fs'),
   temp = require('temp'),
   async = require('async');
 
-/**
- * Configures the module.
- */
-exports.configure = function () {
+// reference to a custom logger.
+var logger = null;
 
+/**
+ * Sets a custom logger.
+ * @param loggerRef - The reference to the custom logger.
+ */
+exports.setLogger = function (loggerRef) {
+  logger = loggerRef;
 };
 
+/**
+ * Generates a PDF from a XML or FO data file.
+ *
+ * @param filePath - The file path to the XML or FO file. Must be full path.
+ * @param callback - The finished callback function. callback(err, pdfFileData);
+ */
 exports.generatePdf = function (filePath, callback) {
   // build a temp pdf file path.
   var tempPdfPath = temp.path({suffix:'.pdf'});
 
   // build the command line process args.
   var processArgs = ['/usr/AHFormatterV63_64/run.sh', '-d', filePath, '-o', tempPdfPath];
+
+  // if the file doesn't exist, exit the function with an error.
+  if (!fileExists(filePath)) {
+    logError('File at file path: ' + filePath + ' does not exist.');
+    return callback(new Error('File at file path: ' + filePath + ' does not exist.'));
+  }
 
   // run the antenna house process.
   var child = spawn('sh', processArgs);
@@ -27,6 +43,21 @@ exports.generatePdf = function (filePath, callback) {
   handleAHPDFError(child, callback);
   handleAHPDFExit(child, tempPdfPath, callback);
 };
+
+/**
+ * Checks if a file exists.
+ * @param filePath - The file path.
+ */
+function fileExists (filePath) {
+  try
+  {
+    return fs.statSync(filePath).isFile();
+  }
+  catch (err)
+  {
+    return false;
+  }
+}
 
 /**
  * Adds the child process on error event handler.
@@ -39,7 +70,7 @@ function handleAHPDFError(child, callback) {
   });
 
   child.stderr.on('data', function (data) {
-    console.error('stderr: ' + data);
+    logError('stderr: ' + data);
   });
 }
 
@@ -96,4 +127,43 @@ function createHandleAHPDFExit(tempPdfPath, callback) {
       }
     );
   };
+}
+
+/**
+ * Writes an info message to the logger or std out.
+ * @param message - The message to write.
+ */
+function logInfo(message) {
+  if (logger && (typeof logger.info === 'function')) {
+    logger.info(message);
+  }
+  else {
+    console.log(message);
+  }
+}
+
+/**
+ * Writes an warning message to the logger or std out.
+ * @param message - The message to write.
+ */
+function logWarn(message) {
+  if (logger && (typeof logger.info === 'function')) {
+    logger.warn(message);
+  }
+  else {
+    console.log(message);
+  }
+}
+
+/**
+ * Writes an error message to the logger or std out.
+ * @param message - The message to write.
+ */
+function logError(message) {
+  if (logger && (typeof logger.error === 'function')) {
+    logger.error(message);
+  }
+  else {
+    console.error(message);
+  }
 }
