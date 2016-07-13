@@ -13,9 +13,8 @@ This module uses the Antenna House AHFormatter tool.
 
 - If you want to add your own logger to the module, you can use the setLogger function. Note: this assumes your logger has 3 function (info, warn, error). If any of those functions are not present, it will default to logging to the console.
 
-
-    var ahPdf = require('dh-ah-pdf');
-    ahPdf.setLogger(logger);
+        var ahPdf = require('dh-ah-pdf');
+        ahPdf.setLogger(logger);
 
 ## Create a PDF:
 
