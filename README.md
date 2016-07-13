@@ -16,6 +16,10 @@ This module uses the Antenna House AHFormatter tool.
   ahPdf.setLogger(logger);
   ```
 
+- The module contains a copy of the AHFormatter binary that it works will. To install it on ubuntu 14.04, you can cd to the bin directory and execute the shell script as a root user.
+
+        sudo sh configure.sh
+
 ## Create a PDF:
 
 1) Create a PDF from an xml or FO file:
