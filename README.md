@@ -22,9 +22,9 @@ This module uses the Antenna House AHFormatter tool.
 
 - Option 2: Install using the following commands:
 
-        apt-get install alien
+        sudo apt-get install alien
         gzip -N -d AHFormatterV63_64-6.3E-MR3.x86_64.rpm.gz
-        alien -i -d -c AHFormatterV63_64-6.3E-MR3.x86_64.rpm
+        sudo alien -i -d -c AHFormatterV63_64-6.3E-MR3.x86_64.rpm
 
 ## Create a PDF:
 
