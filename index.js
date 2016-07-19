@@ -28,7 +28,7 @@ exports.generatePdf = function (filePath, callback) {
   var tempPdfPath = temp.path({suffix:'.pdf'});
 
   // build the command line process args.
-  var processArgs = ['/usr/AHFormatterV63_64/run.sh', '-d', filePath, '-o', tempPdfPath];
+  var processArgs = ['/usr/AHFormatterV63_64/run.sh', '-extlevel', '4', '-d', filePath, '-o', tempPdfPath];
 
   // if the file doesn't exist, exit the function with an error.
   if (!fileExists(filePath)) {
@@ -97,25 +97,25 @@ function createHandleAHPDFExit(tempPdfPath, callback) {
     }
 
     async.waterfall([
-      /**
-       * Read the file data.
-       * @param cb - The finished callback function.
-       */
-      function (cb) {
-        fs.readFile(tempPdfPath, cb);
-      },
+        /**
+         * Read the file data.
+         * @param cb - The finished callback function.
+         */
+          function (cb) {
+          fs.readFile(tempPdfPath, cb);
+        },
 
-      /**
-       * Get rid of the temp file.
-       * @param fileData - The file buffer data from the read file call.
-       * @param cb - The finished callback function.
-       */
-      function (fileData, cb) {
-        fs.unlink(tempPdfPath, function (err) {
-          return cb(err, fileData);
-        });
-      }
-    ],
+        /**
+         * Get rid of the temp file.
+         * @param fileData - The file buffer data from the read file call.
+         * @param cb - The finished callback function.
+         */
+          function (fileData, cb) {
+          fs.unlink(tempPdfPath, function (err) {
+            return cb(err, fileData);
+          });
+        }
+      ],
       /**
        * The finished function for the waterfall call.
        * @param err - Error object if an error occurred.
